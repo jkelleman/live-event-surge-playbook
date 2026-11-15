@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/banner.png" alt="Live Event Surge Playbook banner: human queue wait with standard flows vs surge modes" width="100%"></p>
+<p align="center"><img src="assets/banner.png" alt="Live Event Surge Playbook banner: a live stadium event on a TV with the support agent saying it is on us" width="100%"></p>
 
 # Live Event Surge Playbook: AI Customer Support for Streaming Live Events
 
