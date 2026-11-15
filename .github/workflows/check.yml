@@ -1,0 +1,19 @@
+name: Check config and simulator
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml matplotlib
+      - name: Surge modes config parses
+        run: python -c "import yaml; m = yaml.safe_load(open('config/surge-modes.yaml'))['modes']; assert set(m) == {'normal','elevated','surge','incident'}; print('OK', list(m))"
+      - name: Simulator runs
+        run: python scripts/simulate_surge.py

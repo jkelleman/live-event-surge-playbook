@@ -1,0 +1,67 @@
+# Assumptions for scripts/simulate_surge.py
+#
+# ILLUSTRATIVE NUMBERS ONLY. These are not Netflix data. They're plausible
+# shapes chosen to show how surge-mode design choices change the load on the
+# human team. Replace them with real contact data to use the model.
+
+bucket_minutes: 5
+start_minute: -60        # relative to event start
+end_minute: 180
+
+baseline_contacts_per_bucket: 100
+human_capacity_per_bucket: 180   # contacts human agents can take per 5 min
+
+# Multipliers on baseline, by window (minutes relative to event start)
+spikes:
+  - name: kickoff rush
+    from: -30
+    to: 15
+    multiplier: 6
+    mix: {sign_in: 0.45, payment: 0.20, find_event: 0.25, playback: 0.10}
+  - name: main event
+    from: 15
+    to: 150
+    multiplier: 2
+    mix: {sign_in: 0.10, payment: 0.05, find_event: 0.05, playback: 0.80}
+  - name: incident
+    from: 70
+    to: 110
+    multiplier: 10
+    mix: {sign_in: 0.05, payment: 0.02, find_event: 0.03, playback: 0.90}
+  - name: after
+    from: 150
+    to: 180
+    multiplier: 2.5
+    mix: {sign_in: 0.05, payment: 0.05, find_event: 0.10, playback: 0.30, billing: 0.50}
+
+default_mix: {sign_in: 0.15, payment: 0.10, find_event: 0.05, playback: 0.40, billing: 0.30}
+
+# Share of contacts the virtual agent resolves without a human, by intent.
+# "standard": normal troubleshooting flows all night.
+# "surge_modes": fast paths, known-issue-first during the incident,
+#                minimal troubleshooting, callback offers.
+containment:
+  standard:
+    sign_in: 0.55
+    payment: 0.45
+    find_event: 0.80
+    playback: 0.50
+    playback_during_incident: 0.25   # troubleshooting can't fix our outage
+    billing: 0.60
+  surge_modes:
+    sign_in: 0.65
+    payment: 0.45                    # same: payment failures keep a protected human lane
+    find_event: 0.90
+    playback: 0.60
+    playback_during_incident: 0.70   # "it's on us, nothing to do" resolves the contact
+    billing: 0.60
+
+# Of contacts NOT contained, the share that try again within the window
+# (a repeat contact adds load in the next bucket).
+repeat_rate:
+  standard: 0.25
+  surge_modes: 0.15
+
+# In surge_modes, share of non-contained, non-payment contacts that accept a
+# callback after the event instead of waiting in the live queue.
+callback_acceptance: 0.30

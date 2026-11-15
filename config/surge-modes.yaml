@@ -1,0 +1,70 @@
+# Surge modes for the virtual support agent during live events.
+#
+# The agent reads the current mode at the start of every conversation.
+# Mode changes are made by the CS operations lead (see docs/runbook.md);
+# the triggers below are recommendations shown on the ops dashboard, not
+# automatic switches.
+
+modes:
+  normal:
+    description: "Everyday support."
+    triggers: "Default."
+    behavior:
+      known_issue_first: true          # always on; only matters when an incident exists
+      proactive_banner: false
+      troubleshooting_depth: full      # full guided troubleshooting
+      max_clarifying_questions: 2
+      retention_offers: allowed        # one relevant offer, per respectful-cancellation
+      human_handoff: standard          # per escalate-to-human
+      callback_offer: false
+
+  elevated:
+    description: "Event window is open. Volume is rising but nothing is broken."
+    triggers: "From T-60 min to T+30 min of a tier-1 live event, or contact rate > 2x baseline."
+    behavior:
+      known_issue_first: true
+      proactive_banner: true           # help center + in-app: 'Watching tonight's event? Here's how to find it.'
+      troubleshooting_depth: short     # 1-2 steps, then a different path
+      max_clarifying_questions: 1
+      retention_offers: off            # nobody cancelling mid-event wants an offer
+      human_handoff: standard
+      callback_offer: false
+      fast_paths:                      # pre-built flows, see flows/
+        - sign-in-at-kickoff
+        - cant-find-the-event
+        - new-member-payment
+
+  surge:
+    description: "Contact volume far above capacity. Protect the human queue for cases only humans can solve."
+    triggers: "Contact rate > 5x baseline, or human queue wait > 10 min."
+    behavior:
+      known_issue_first: true
+      proactive_banner: true
+      troubleshooting_depth: minimal   # one step max, then known-issue or callback
+      max_clarifying_questions: 1
+      retention_offers: off
+      human_handoff: protected         # immediate for safety, payment failures, and explicit second requests;
+                                       # everything else is offered a callback after the event
+      callback_offer: true
+      fast_paths: [sign-in-at-kickoff, cant-find-the-event, new-member-payment, live-buffering]
+
+  incident:
+    description: "Confirmed service problem affecting the live event."
+    triggers: "Incident declared by the incident commander for the live event."
+    behavior:
+      known_issue_first: true          # every matching conversation opens with the incident message
+      proactive_banner: true           # banner switches to the incident message in every locale
+      troubleshooting_depth: none      # no router restarts during our outage
+      max_clarifying_questions: 1      # only to check whether their problem is different
+      retention_offers: off
+      human_handoff: protected
+      callback_offer: true
+      incident_messages: required      # pre-approved per locale, see docs/runbook.md
+      fast_paths: [live-buffering]
+
+# Behavior that never changes, in any mode
+invariants:
+  - "Transfer to a person on the member's second request."
+  - "Safety signals (fraud, account takeover, distress) always go to a human immediately."
+  - "Only state ETAs that come from the incident record."
+  - "Never claim a problem is on the member's side during a declared incident unless their symptom clearly differs."
