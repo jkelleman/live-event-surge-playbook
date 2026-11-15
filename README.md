@@ -1,4 +1,14 @@
+<p align="center"><img src="assets/banner.png" alt="Live Event Surge Playbook banner: human queue wait with standard flows vs surge modes" width="100%"></p>
+
 # Live Event Surge Playbook: AI Customer Support for Streaming Live Events
+
+[![Check config and simulator](https://github.com/jkelleman/live-event-surge-playbook/actions/workflows/check.yml/badge.svg)](https://github.com/jkelleman/live-event-surge-playbook/actions/workflows/check.yml)
+![surge modes: 4](https://img.shields.io/badge/surge%20modes-4-ff9f43)
+![flows: 5](https://img.shields.io/badge/flows-5-6f86ff)
+![focus: live events](https://img.shields.io/badge/focus-live%20events-0a0f2c)
+![Python 3.12](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Built by Jen Kelleman](https://img.shields.io/badge/built%20by-Jen%20Kelleman-555555?logo=github&logoColor=white)](https://github.com/jkelleman)
 
 How an AI customer-support agent should behave when a major live event sends a huge number of members to support at once. It includes the four phases of an event, surge modes the agent switches between, five fast-path conversation flows (with diagrams), an ops runbook, a post-event review template, and a small simulator that shows how these design choices change the human queue.
 

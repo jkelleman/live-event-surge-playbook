@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0f2c"/><stop offset="1" stop-color="#141a46"/></linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe3ff" stop-opacity="0.22"/><stop offset="1" stop-color="#cfe3ff" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1280" height="400" fill="url(#bg)"/>
+  <!-- stadium light beams -->
+  <polygon points="760,0 800,0 1010,400 640,400" fill="url(#beam)"/>
+  <polygon points="1180,0 1220,0 1280,260 1280,400 1000,400" fill="url(#beam)"/>
+  <g fill="#ffffff"><circle cx="780" cy="6" r="7"/><circle cx="1200" cy="6" r="7"/></g>
+  <!-- chart area -->
+  <g stroke="#ffffff" stroke-opacity="0.08">
+    <line x1="700" y1="330" x2="1230" y2="330"/><line x1="700" y1="250" x2="1230" y2="250"/><line x1="700" y1="170" x2="1230" y2="170"/><line x1="700" y1="90" x2="1230" y2="90"/>
+  </g>
+  <line x1="700" y1="300" x2="1230" y2="300" stroke="#9aa6d6" stroke-width="2" stroke-dasharray="6 6" opacity="0.7"/>
+  <text x="1230" y="292" fill="#9aa6d6" font-family="Inter, Arial, sans-serif" font-size="14" text-anchor="end">10-min wait target</text>
+  <!-- standard flows: spikes off the chart -->
+  <polyline points="700,330 760,330 800,290 840,300 880,318 920,326 960,240 1000,120 1030,64 1060,80 1110,100 1170,118 1230,132" fill="none" stroke="#6f86ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" opacity="0.85"/>
+  <!-- surge modes: stays calm -->
+  <polyline points="700,330 800,330 960,330 1000,318 1030,306 1060,322 1100,330 1230,330" fill="none" stroke="#ff9f43" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" filter="url(#glow)"/>
+  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="700">
+    <circle cx="716" cy="62" r="6" fill="#6f86ff"/><text x="730" y="67" fill="#c9d1f5">standard flows</text>
+    <circle cx="866" cy="62" r="6" fill="#ff9f43"/><text x="880" y="67" fill="#ffd5a8">surge modes</text>
+  </g>
+  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <g transform="translate(64,62)">
+      <rect width="92" height="34" rx="17" fill="#ff9f43"/>
+      <circle cx="22" cy="17" r="7" fill="#0a0f2c"/>
+      <text x="56" y="23" fill="#0a0f2c" font-size="16" font-weight="900" text-anchor="middle" letter-spacing="2">LIVE</text>
+    </g>
+    <text x="64" y="160" fill="#ffffff" font-size="54" font-weight="800">Live Event</text>
+    <text x="64" y="220" fill="#ffffff" font-size="54" font-weight="800">Surge Playbook</text>
+    <text x="64" y="270" fill="#c9d1f5" font-size="21">When millions show up at kickoff, the first thing</text>
+    <text x="64" y="300" fill="#c9d1f5" font-size="21">the AI support agent says decides the queue.</text>
+  </g>
+</svg>
