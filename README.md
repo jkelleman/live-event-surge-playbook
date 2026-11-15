@@ -1,4 +1,4 @@
-# Live Event Surge Playbook
+# Live Event Surge Playbook: AI Customer Support for Streaming Live Events
 
 How an AI customer-support agent should behave when a major live event sends a huge number of members to support at once. It includes the four phases of an event, surge modes the agent switches between, five fast-path conversation flows (with diagrams), an ops runbook, a post-event review template, and a small simulator that shows how these design choices change the human queue.
 
